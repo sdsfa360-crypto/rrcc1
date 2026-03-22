@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قوانين كراون سيتي - قسم الشرطة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: radial-gradient(circle at center, #0d223f 0%, #050a12 60%, #000000 100%);
+            background-attachment: fixed;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 100px 20px 40px 20px; /* زيادة التباعد العلوي للسماح ببروز الأيقونات */
+            margin: 0;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* القائمة العلوية المطورة */
+        .top-left-nav {
+            position: fixed;
+            top: 20px;
+            left: 30px;
+            display: flex;
+            gap: 25px;
+            z-index: 2000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-icon {
+            width: 75px; /* تكبير الأيقونة */
+            height: 75px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(74, 158, 255, 0.3);
+            border-radius: 22px; /* زوايا دائرية ناعمة */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a9eff;
+            font-size: 30px; /* تكبير الرمز الداخلي */
+            margin-bottom: 8px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-icon::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .nav-label {
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 0.5px;
+        }
+
+        /* تأثيرات التحويم */
+        .nav-item:hover {
+            transform: translateY(-8px);
+        }
+
+        .nav-item:hover .nav-icon {
+            background: #4a9eff;
+            color: #ffffff;
+            border-color: #ffffff;
+            box-shadow: 0 0 25px rgba(74, 158, 255, 0.6);
+        }
+
+        .nav-item:hover .nav-icon::before {
+            left: 100%;
+        }
+
+        /* باقي تنسيقات الصفحة */
+        .logo-container { margin-bottom: 20px; }
+        .logo-img {
+            width: 120px;
+            height: auto;
+            border-radius: 50%;
+            border: 3px solid rgba(74, 158, 255, 0.5);
+            box-shadow: 0 0 40px rgba(74, 158, 255, 0.3);
+        }
+
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { font-size: 38px; margin-bottom: 10px; text-shadow: 0 2px 15px rgba(0,0,0,0.8); }
+        .header p { color: #4a9eff; font-size: 16px; font-weight: bold; }
+
+        .accordion-container { width: 100%; max-width: 900px; }
+        .accordion-item {
+            background: rgba(15, 15, 25, 0.7);
+            border: 1px solid rgba(74, 158, 255, 0.1);
+            border-radius: 15px;
+            margin-bottom: 18px;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            transition: 0.3s;
+        }
+
+        .accordion-header {
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .accordion-header h3 { margin: 0; font-size: 20px; display: flex; align-items: center; gap: 15px; }
+        .icon-left { color: #4a9eff; font-size: 24px; transition: 0.3s; }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.5s cubic-bezier(0, 1, 0, 1);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0 30px;
+        }
+
+        .accordion-item.active .accordion-content { max-height: 2000px; padding-bottom: 30px; }
+        .accordion-item.active .icon-left { transform: rotate(45deg); color: #ff4d4d; }
+
+        .accordion-content ul { list-style: none; padding: 20px 0; margin: 0; }
+        .accordion-content li {
+            margin-bottom: 15px;
+            padding-right: 20px;
+            border-right: 4px solid #4a9eff;
+            color: #ececec;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .highlight-blue { color: #4a9eff; font-weight: bold; text-decoration: underline; }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(74, 158, 255, 0.2);
+        }
+        th { background: #1a2a44; color: #4a9eff; padding: 15px; font-size: 17px; }
+        td { padding: 15px; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; }
+
+        .warning-header h3, .warning-header .icon-left { color: #ff4d4d !important; }
+        .warning-item.active { border-color: #ff4d4d !important; }
+        .warning-item li { border-right-color: #ff4d4d !important; }
+
+        .main-title { font-size: 28px; font-weight: bold; margin-bottom: 35px; border-bottom: 2px solid #4a9eff; padding-bottom: 10px; }
+
+        /* موبايل UI */
+        @media (max-width: 768px) {
+            .top-left-nav { left: 10px; gap: 10px; top: 10px; }
+            .nav-icon { width: 55px; height: 55px; font-size: 22px; }
+            .nav-label { font-size: 10px; }
+            body { padding-top: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-left-nav">
+        <a href="https://sdsfa360-crypto.github.io/r-cc/" class="nav-item">
+            <div class="nav-icon"><i class="fas fa-gavel"></i></div>
+            <span class="nav-label">القوانين</span>
+        </a>
+        <a href="https://cc.thta.shop/products" target="_blank" class="nav-item">
+            <div class="nav-icon"><i class="fas fa-shopping-bag"></i></div>
+            <span class="nav-label">المتجر</span>
+        </a>
+        <a href="https://discord.com/invite/r-cc" target="_blank" class="nav-item">
+            <div class="nav-icon"><i class="fab fa-discord"></i></div>
+            <span class="nav-label">ديسكورد</span>
+        </a>
+    </div>
+
+    <div class="logo-container">
+        <img src="police_logo.png" alt="Logo" class="logo-img">
+    </div>
+
+    <div class="header">
+        <h1>قوانين كراون سيتي</h1>
+        <p>الرئيسية &nbsp; <i class="fas fa-chevron-left" style="font-size: 12px; opacity: 0.5;"></i> &nbsp; <span style="color:white">قوانين الشرطة</span></p>
+    </div>
+
+    <div class="main-title">قوانين قسم الشرطة</div>
+    
+    <div class="accordion-container">
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3><i class="fas fa-shield-alt"></i> القوانين العسكرية</h3>
+                <span class="icon-left"><i class="fas fa-plus"></i></span>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>(1) عدم التسلط على المواطنين والرتب الأقل منك والاحترام المتبادل واجب.</li>
+                    <li>(2) الجدية في العمل وتقمص شخصية العسكري لأبعد حد (رول بلاي واقعي).</li>
+                    <li>(3) يمنع بيع أو إعطاء معدات الشرطة للمواطنين <span class="highlight-blue">(باند نهائي)</span>.</li>
+                    <li>(4) ممنوع عصيان أوامر الرتب العليا بتاتاً.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3><i class="fas fa-car-crash"></i> المركبات والمطاردات</h3>
+                <span class="icon-left"><i class="fas fa-plus"></i></span>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>(1) الالتزام بمركبات رتبتك فقط ومخالفة ذلك تعرضك للمحاسبة.</li>
+                    <li>(2) يمنع استخدام سيارات المواطنين.</li>
+                    <li>(3) في المطاردة يمنع الصدم المتعمد ويجب الحفاظ على مسافة آمنة.</li>
+                    <li>(4) يمنع إطلاق النار في المطاردة إلا بعد مرور <span class="highlight-blue">6 دقائق</span> أو إذا بدأ الهارب بالإطلاق.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3><i class="fas fa-gem"></i> حدود الوحدات في السرقات</h3>
+                <span class="icon-left"><i class="fas fa-plus"></i></span>
+            </div>
+            <div class="accordion-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>نوع البلاغ</th>
+                            <th>الحد الأقصى للوحدات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>سرقة بقالة / بيت</td><td>(4 مجرمين) 5 وحدات</td></tr>
+                        <tr><td>صراف صغير</td><td>(2 مجرمين) 3 وحدات</td></tr>
+                        <tr><td>المجوهرات</td><td>(5 مجرمين) 7 وحدات</td></tr>
+                        <tr><td>البنك</td><td>(6 مجرمين) 8 وحدات</td></tr>
+                        <tr><td>البنك المركزي</td><td>(8 مجرمين) 10 وحدات</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="accordion-item warning-item">
+            <div class="accordion-header warning-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> التحذيرات العسكرية</h3>
+                <span class="icon-left"><i class="fas fa-plus"></i></span>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>(1) في حال قطعت بلاغ زميلك يتم انزال تحذيرين.</li>
+                    <li>(2) عدم الرد في الموجه يتم انزال تحذيرين.</li>
+                    <li>(3) عدم تشغيل البودي كام يتم انزال تحذيرين.</li>
+                    <li>(4) القبض على مجرم دون ذكر حقوقه يتم انزال 3 تحذيرات.</li>
+                    <li>(5) الاستهبال في الميدان يتم انزال 3 تحذيرات.</li>
+                    <li>(6) تعدي المراجع يتم انزال 3 تحذيرات.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.accordion-header').forEach(h => {
+            h.addEventListener('click', () => {
+                const item = h.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // إغلاق أي أكورديون آخر مفتوح (اختياري)
+                // document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
